@@ -1,0 +1,32 @@
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  width: 90vw;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  // width: 50vmin;
+  gap: 10px;
+  
+  button {
+    padding: 10px 20px;
+    background-color: #00ff00;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: black;
+    
+    &:hover {
+      background-color: #00cc00;
+    }
+    &:disabled {
+      filter: brightness(30%)
+    }
+  }
+}
