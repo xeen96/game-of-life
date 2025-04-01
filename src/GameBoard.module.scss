@@ -2,9 +2,9 @@
 
 .board {
   display: grid;
-  width: 100%;
-  max-width: 600px; // Ограничиваем размер поля
-  aspect-ratio: 1 / 1; // Сохраняем квадратную форму
+  width: 50vmin;
+  height: 50vmin;
+  // aspect-ratio: 1 / 1; // Сохраняем квадратную форму
   border: 1px solid var.$border-green;
   background: rgba(0, 10, 0, 0.9);
   box-shadow: 0 0 10px var.$border-green;
