@@ -3,15 +3,17 @@ import { ChangeEvent, useState, useEffect } from "react";
 import styles from "./Game.module.scss";
 import GameBoard from "./gameBoard";
 
-const GRID_SIZE = 20;
 const MIN_SEED = 1_000_000;
 const MAX_SEED = 999_999_999;
 const INTERVAL_DELAY = 1500;
+const MIN_GRID_SIZE = 10;
+const MAX_GRID_SIZE = 50;
 
 const Game = () => {
   const [seed, setSeed] = useState(generateRandomSeed());
   const [isRunning, setIsRunning] = useState(false);
-  const [grid, setGrid] = useState<number[][]>(generateInitialGrid(seed));
+  const [gridSize, setGridSize] = useState(20); // Динамический размер грида
+  const [grid, setGrid] = useState<number[][]>(generateInitialGrid(seed, gridSize));
 
   function generateRandomSeed(): number {
     return Math.floor(Math.random() * (MAX_SEED - MIN_SEED)) + MIN_SEED;
@@ -22,10 +24,10 @@ const Game = () => {
     return x - Math.floor(x);
   }
 
-  function generateInitialGrid(seed: number): number[][] {
-    return Array.from({ length: GRID_SIZE }, (_, y) =>
-      Array.from({ length: GRID_SIZE }, (_, x) => 
-        seededRandom(seed + x + y * GRID_SIZE) < 0.3 ? 1 : 0
+  function generateInitialGrid(seed: number, size: number): number[][] {
+    return Array.from({ length: size }, (_, y) =>
+      Array.from({ length: size }, (_, x) =>
+        seededRandom(seed + x + y * size) < 0.3 ? 1 : 0
       )
     );
   }
@@ -37,12 +39,7 @@ const Game = () => {
         if (i === 0 && j === 0) continue;
         const newY = y + i;
         const newX = x + j;
-        if (
-          newY >= 0 && 
-          newY < GRID_SIZE && 
-          newX >= 0 && 
-          newX < GRID_SIZE
-        ) {
+        if (newY >= 0 && newY < gridSize && newX >= 0 && newX < gridSize) {
           count += grid[newY][newX];
         }
       }
@@ -54,9 +51,13 @@ const Game = () => {
     return currentGrid.map((row, y) =>
       row.map((cell, x) => {
         const neighbors = countNeighbors(currentGrid, x, y);
-        return cell === 1 
-          ? (neighbors === 2 || neighbors === 3 ? 1 : 0)
-          : (neighbors === 3 ? 1 : 0);
+        return cell === 1
+          ? neighbors === 2 || neighbors === 3
+            ? 1
+            : 0
+          : neighbors === 3
+          ? 1
+          : 0;
       })
     );
   }
@@ -65,7 +66,7 @@ const Game = () => {
     if (!isRunning) return;
 
     const interval = setInterval(() => {
-      setGrid(prevGrid => nextGeneration(prevGrid));
+      setGrid((prevGrid) => nextGeneration(prevGrid));
     }, INTERVAL_DELAY);
 
     return () => clearInterval(interval);
@@ -74,17 +75,23 @@ const Game = () => {
   const handleSeedChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newSeed = Number(e.target.value);
     setSeed(newSeed);
-    setGrid(generateInitialGrid(newSeed));
+    setGrid(generateInitialGrid(newSeed, gridSize));
+  };
+
+  const handleGridSizeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newSize = Number(e.target.value);
+    setGridSize(newSize);
+    setGrid(generateInitialGrid(seed, newSize)); // Перегенерируем сетку с новым размером
   };
 
   const handleToggleRunning = () => {
-    setIsRunning(prev => !prev);
+    setIsRunning((prev) => !prev);
   };
 
   const handleRandomizeSeed = () => {
     const newSeed = generateRandomSeed();
     setSeed(newSeed);
-    setGrid(generateInitialGrid(newSeed));
+    setGrid(generateInitialGrid(newSeed, gridSize));
   };
 
   return (
@@ -102,15 +109,27 @@ const Game = () => {
           />
           <span className={styles.seedValue}>Seed: {seed}</span>
         </div>
+        <div className={styles.gridSizeControl}>
+          <input
+            type="range"
+            value={gridSize}
+            min={MIN_GRID_SIZE}
+            max={MAX_GRID_SIZE}
+            onChange={handleGridSizeChange}
+            disabled={isRunning}
+            aria-label="Grid size"
+          />
+          <span className={styles.gridSizeValue}>Grid Size: {gridSize}</span>
+        </div>
         <div className={styles.buttonGroup}>
-          <button 
-            onClick={handleRandomizeSeed} 
+          <button
+            onClick={handleRandomizeSeed}
             disabled={isRunning}
             aria-label="Generate new random seed"
           >
             New Seed
           </button>
-          <button 
+          <button
             onClick={handleToggleRunning}
             aria-label={isRunning ? "Stop simulation" : "Start simulation"}
           >
@@ -118,7 +137,7 @@ const Game = () => {
           </button>
         </div>
       </section>
-      <GameBoard gridSize={GRID_SIZE} grid={grid} />
+      <GameBoard gridSize={gridSize} grid={grid} />
     </div>
   );
 };

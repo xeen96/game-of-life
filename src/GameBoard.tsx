@@ -1,3 +1,4 @@
+// GameBoard.tsx
 import styles from "./GameBoard.module.scss";
 
 interface GameBoardProps {
@@ -6,30 +7,20 @@ interface GameBoardProps {
 }
 
 const GameBoard = ({ gridSize, grid }: GameBoardProps) => {
-  const cellSize = `${50 / gridSize}vmin`;
-
   return (
     <div
       className={styles.board}
       style={{
-        gridTemplateColumns: `repeat(${gridSize}, ${cellSize})`,
-        gridTemplateRows: `repeat(${gridSize}, ${cellSize})`,
+        gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
+        gridTemplateRows: `repeat(${gridSize}, 1fr)`,
       }}
     >
-      {grid.map((row, y) =>
-        row.map((cell, x) => (
-          <div
-            key={`${x}-${y}`}
-            className={styles["grid-cell"]}
-            style={{
-              width: cellSize,
-              height: cellSize,
-              backgroundColor: cell ? "darkgreen" : "inherit",
-              border: "0.5px dashed darkgreen",
-            }}
-          />
-        ))
-      )}
+      {grid.flat().map((cell, index) => (
+        <div
+          key={index}
+          className={`${styles.cell} ${cell === 1 ? styles.alive : ""}`}
+        />
+      ))}
     </div>
   );
 };

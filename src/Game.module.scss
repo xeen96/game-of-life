@@ -1,14 +1,14 @@
-// Game.module.scss
 @use './variables' as var;
 
 .gameContainer {
   display: flex;
   flex-direction: column;
-  justify-items: center;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 100vh;
-  
+  max-width: 1000px; // Ограничиваем максимальную ширину
+  min-height: 100vh; // Используем min-height для гибкости
+  padding: 2rem;
   border: 2px solid var.$border-green;
   background: rgba(0, 20, 0, 0.8);
   box-shadow: inset 0 0 10px var.$border-green;
@@ -22,7 +22,8 @@
   padding: 1rem;
 }
 
-.seedControl {
+.seedControl,
+.gridSizeControl {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,12 +33,12 @@
 
   input[type="range"] {
     width: 100%;
-    height: 10px; 
-    appearance: none; 
-    background: rgba(0, 20, 0, 0.8); 
-    border: 1px solid var.$border-green; 
+    height: 10px;
+    appearance: none;
+    background: rgba(0, 20, 0, 0.8);
+    border: 1px solid var.$border-green;
     border-radius: 5px;
-    box-shadow: inset 0 0 5px var.$border-green; 
+    box-shadow: inset 0 0 5px var.$border-green;
     cursor: pointer;
 
     &::-webkit-slider-thumb {
@@ -88,7 +89,8 @@
   }
 }
 
-.seedValue {
+.seedValue,
+.gridSizeValue {
   color: var.$green;
   font-family: 'VT323', monospace;
   font-size: 1.1rem;
