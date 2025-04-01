@@ -1,32 +1,124 @@
-.game {
+// Game.module.scss
+@use './variables' as var;
+
+.gameContainer {
   display: flex;
   flex-direction: column;
+  justify-items: center;
   align-items: center;
-  justify-content: center;
-  height: 90vh;
-  width: 90vw;
+  width: 100%;
+  height: 100vh;
+  
+  border: 2px solid var.$border-green;
+  background: rgba(0, 20, 0, 0.8);
+  box-shadow: inset 0 0 10px var.$border-green;
+  overflow-x: auto;
 }
 
 .controls {
+  display: grid;
+  gap: 1.5rem;
+  justify-items: center;
+  padding: 1rem;
+}
+
+.seedControl {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  // width: 50vmin;
-  gap: 10px;
-  
-  button {
-    padding: 10px 20px;
-    background-color: #00ff00;
-    border: none;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 300px;
+
+  input[type="range"] {
+    width: 100%;
+    height: 10px; 
+    appearance: none; 
+    background: rgba(0, 20, 0, 0.8); 
+    border: 1px solid var.$border-green; 
     border-radius: 5px;
+    box-shadow: inset 0 0 5px var.$border-green; 
     cursor: pointer;
-    color: black;
-    
-    &:hover {
-      background-color: #00cc00;
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: var.$green;
+      border: 2px solid var.$border-green;
+      border-radius: 50%;
+      box-shadow: 0 0 5px rgba(0, 255, 0, 0.8);
+      transition: background-color 0.2s, box-shadow 0.2s;
+      cursor: pointer;
     }
+
+    &::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: var.$green;
+      border: 2px solid var.$border-green;
+      border-radius: 50%;
+      box-shadow: 0 0 5px rgba(0, 255, 0, 0.8);
+      transition: background-color 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    &:hover::-webkit-slider-thumb,
+    &:hover::-moz-range-thumb {
+      background: #00cc00;
+      box-shadow: 0 0 10px var.$green;
+    }
+
     &:disabled {
-      filter: brightness(30%)
+      cursor: not-allowed;
+      opacity: 0.5;
+      filter: brightness(30%);
+
+      &::-webkit-slider-thumb,
+      &::-moz-range-thumb {
+        cursor: not-allowed;
+        box-shadow: none;
+      }
     }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 8px var.$green;
+    }
+  }
+}
+
+.seedValue {
+  color: var.$green;
+  font-family: 'VT323', monospace;
+  font-size: 1.1rem;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.8);
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: var.$green;
+  border: 2px solid var.$border-green;
+  border-radius: 5px;
+  cursor: pointer;
+  color: black;
+  font-family: 'VT323', monospace;
+  font-size: 1.1rem;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.8);
+  transition: background-color 0.2s, box-shadow 0.2s;
+
+  &:hover:not(:disabled) {
+    background-color: #00cc00;
+    box-shadow: 0 0 10px var.$green;
+  }
+
+  &:disabled {
+    filter: brightness(30%);
+    cursor: not-allowed;
   }
 }

@@ -1,27 +1,12 @@
-import styles from "./GameBoard.module.scss"
+import styles from "./GameBoard.module.scss";
 
 interface GameBoardProps {
   gridSize: number;
-  seed: number;
+  grid: number[][];
 }
 
-const GameBoard = ({ gridSize, seed }: GameBoardProps) => {
-  const seededRandom = (seed: number) => {
-    const x = Math.sin(seed) * 10000;
-    return x - Math.floor(x);
-  };
-
-// Генерируем сетку с "живыми" клетками на основе seed
-const grid = Array.from({ length: gridSize }, (_, y) =>
-  Array.from({ length: gridSize }, (_, x) => {
-    // Уникальное значение для каждой клетки на основе координат и seed
-    const uniqueSeed = seed + x + y * gridSize;
-    // Вероятность 0.3 (30%) что клетка будет жива
-    return seededRandom(uniqueSeed) < 0.3 ? 1 : 0;
-  })
-);
-
-  const cellSize = `${50 / gridSize}vmin`; 
+const GameBoard = ({ gridSize, grid }: GameBoardProps) => {
+  const cellSize = `${50 / gridSize}vmin`;
 
   return (
     <div
