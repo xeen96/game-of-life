@@ -1,13 +1,16 @@
 {
   "name": "game-of-life",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0",
   "type": "module",
+  "homepage": "https://github.com/xeen96/game-of-life/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "gh-pages": "^6.3.0",

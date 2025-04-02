@@ -1,7 +1,7 @@
 // Game.tsx
 import { ChangeEvent, useState, useEffect } from "react";
 import styles from "./Game.module.scss";
-import GameBoard from "./gameBoard";
+import GameBoard from "./GameBoard";
 
 const MIN_SEED = 1_000_000;
 const MAX_SEED = 999_999_999;
