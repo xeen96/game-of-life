@@ -4,10 +4,47 @@
   display: grid;
   width: 50vmin;
   height: 50vmin;
-  // aspect-ratio: 1 / 1; // Сохраняем квадратную форму
+  position: relative;
+  aspect-ratio: 1 / 1; 
   border: 1px solid var.$border-green;
   background: rgba(0, 10, 0, 0.9);
   box-shadow: 0 0 10px var.$border-green;
+  // filter: drop-shadow(0 0 2rem var.$border-green);
+  margin: 4rem;
+
+  //  Зернистость, пока не знаю удалять ли ее
+  // &::after {
+  //   content: '';
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   width: 100%;
+  //   height: 100%;
+  //   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==');
+  //   opacity: 0.1;
+  //   pointer-events: none;
+  // }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1%;
+    filter: blur(1.5px);
+    background: var.$scanline-color;
+    display: none;
+  }
+  &.running::before {
+    display: block;
+    animation: scanline 1.5s linear infinite;
+  }
+
+  @keyframes scanline {
+    0% { top: 0; }
+    100% { top: 100%; }
+  }
 }
 
 .cell {
@@ -18,5 +55,12 @@
   &.alive {
     background: var.$green;
     box-shadow: 0 0 5px var.$green;
+  }
+}
+
+@media screen and (max-width: 1280px){
+  .board {
+    width: 80vmin;
+    height: 80vmin;
   }
 }

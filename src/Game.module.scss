@@ -5,11 +5,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 100%;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+
   border: 2px solid var.$border-green;
   background: rgba(0, 20, 0, 0.8);
   box-shadow: inset 0 0 10px var.$border-green;
+  padding: 0;
 }
 
 .controls {
@@ -17,6 +19,7 @@
   gap: 1.5rem;
   justify-items: center;
   padding: 1rem;
+  
 }
 
 .seedControl,
@@ -101,23 +104,35 @@
 
 button {
   padding: 10px 20px;
-  background-color: var.$green;
-  border: 2px solid var.$border-green;
+  background-color: var.$green; 
+  border: 2px solid var.$border-green; 
   border-radius: 5px;
   cursor: pointer;
-  color: black;
+  color: black; 
   font-family: 'VT323', monospace;
   font-size: 1.1rem;
-  text-shadow: 0 0 5px rgba(0, 255, 0, 0.8);
-  transition: background-color 0.2s, box-shadow 0.2s;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.8); 
+  position: relative; 
+  transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
+
+  box-shadow: inset 0 0 5px var.$border-green;
+
 
   &:hover:not(:disabled) {
-    background-color: #00cc00;
-    box-shadow: 0 0 10px var.$green;
+    background-color: #00cc00; 
+    box-shadow: 0 0 10px var.$green, inset 0 0 8px var.$border-green; 
+    transform: scale(1.05); 
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.95); 
+    box-shadow: 0 0 5px var.$green, inset 0 0 10px var.$border-green;
   }
 
   &:disabled {
-    filter: brightness(30%);
+    filter: brightness(30%); 
     cursor: not-allowed;
+    text-shadow: none; 
+    box-shadow: none; 
   }
 }

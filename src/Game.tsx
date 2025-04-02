@@ -12,7 +12,7 @@ const MAX_GRID_SIZE = 50;
 const Game = () => {
   const [seed, setSeed] = useState(generateRandomSeed());
   const [isRunning, setIsRunning] = useState(false);
-  const [gridSize, setGridSize] = useState(20); // Динамический размер грида
+  const [gridSize, setGridSize] = useState(20);
   const [grid, setGrid] = useState<number[][]>(generateInitialGrid(seed, gridSize));
 
   function generateRandomSeed(): number {
@@ -81,7 +81,7 @@ const Game = () => {
   const handleGridSizeChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newSize = Number(e.target.value);
     setGridSize(newSize);
-    setGrid(generateInitialGrid(seed, newSize)); // Перегенерируем сетку с новым размером
+    setGrid(generateInitialGrid(seed, newSize)); 
   };
 
   const handleToggleRunning = () => {
@@ -127,7 +127,7 @@ const Game = () => {
             disabled={isRunning}
             aria-label="Generate new random seed"
           >
-            New Seed
+            Set Random Seed
           </button>
           <button
             onClick={handleToggleRunning}
@@ -137,7 +137,7 @@ const Game = () => {
           </button>
         </div>
       </section>
-      <GameBoard gridSize={gridSize} grid={grid} />
+      <GameBoard gridSize={gridSize} grid={grid} isRunning={isRunning}/>
     </div>
   );
 };

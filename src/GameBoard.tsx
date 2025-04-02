@@ -4,12 +4,13 @@ import styles from "./GameBoard.module.scss";
 interface GameBoardProps {
   gridSize: number;
   grid: number[][];
+  isRunning: boolean;
 }
 
-const GameBoard = ({ gridSize, grid }: GameBoardProps) => {
+const GameBoard = ({ gridSize, grid, isRunning }: GameBoardProps) => {
   return (
     <div
-      className={styles.board}
+    className={`${styles.board} ${isRunning ? styles.running : ""}`}
       style={{
         gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
         gridTemplateRows: `repeat(${gridSize}, 1fr)`,
