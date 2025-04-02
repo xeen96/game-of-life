@@ -6,9 +6,7 @@ export default defineConfig({
   plugins: [react()],
   css: {
     preprocessorOptions: {
-      scss: {
-        
-      },
-    },
-  },
+      scss: {},
+    },},
+  base: '/game-of-life/'
 });
