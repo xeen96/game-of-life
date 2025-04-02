@@ -1,4 +1,3 @@
-// GameBoard.tsx
 import styles from "./GameBoard.module.scss";
 
 interface GameBoardProps {
